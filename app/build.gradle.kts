@@ -29,6 +29,19 @@ val version = "2.7.0"
 val versionDisplayName = "$version ${if (isReleaseBuild) "" else devReleaseName}"
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            val keystorePropertiesFile = rootProject.file("local.properties")
+            val keystoreProperties = Properties().apply {
+                load(keystorePropertiesFile.inputStream())
+            }
+            val keystorePassword = keystoreProperties.getProperty("keystore.password")
+            storeFile = file("D:\\Github\\elixir_updater\\app\\platform.jks")
+            storePassword = keystorePassword ?: ""
+            keyPassword = keystorePassword ?: ""
+            keyAlias = "Elixir"
+        }
+    }
     compileSdk = 34
     namespace = "app.lawnchair.lawnicons"
 
